@@ -1,0 +1,24 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.app {
+  background: linear-gradient(
+    to right bottom,
+    #f0e1ff,
+    #f1d7fa,
+    #f3cdf3,
+    #f6c3eb,
+    #fab8e0,
+    #feb5d3,
+    #ffb3c6,
+    #ffb2ba,
+    #ffbbaf,
+    #ffc7a6,
+    #ffd5a2,
+    #f8e3a5
+  );
+  /* z-index: -1; */
+  min-height: 100vh;
+}

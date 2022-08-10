@@ -1,0 +1,15 @@
+.searchbox-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* min-height: 40vh; */
+}
+
+input {
+  padding: 13px 16px;
+  outline: 0;
+  border: 0;
+  border-radius: 16px;
+  margin-right: 30px;
+  width: 300px;
+}
