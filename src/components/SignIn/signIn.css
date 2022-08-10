@@ -1,0 +1,33 @@
+.form-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+.form {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  height: 500px;
+  width: 400px;
+  background-color: rgba(0, 0, 0, 0.273);
+}
+
+label {
+  color: aliceblue;
+  font-weight: 700;
+}
+
+.secondary {
+  text-decoration: none;
+  color: aliceblue;
+  font-weight: 800;
+  font-size: 1.2em;
+  background: transparent;
+  border: 0;
+  outline: 0;
+}
+.secondary:hover {
+  text-decoration: line-through;
+}
