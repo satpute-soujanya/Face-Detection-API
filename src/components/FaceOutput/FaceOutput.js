@@ -10,6 +10,7 @@ const FaceOutput = () => {
         }
         alt="face"
         width={400}
+        className="face-img"
       />
     </div>
   )

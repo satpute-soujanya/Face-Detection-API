@@ -1,11 +1,11 @@
 import React from 'react'
 import './imageInput.css'
-const ImageInput = ({ onInputChange, onButtonSubmit }) => {
+const ImageInput = ({ onChangeInput, onSubmitButton }) => {
   return (
     <>
       <div className="searchbox-container">
-        <input type="text" onChange={onInputChange} />
-        <button className="primary" onClick={onButtonSubmit}>
+        <input type="text" onChange={onChangeInput} />
+        <button className="primary" onClick={onSubmitButton}>
           Face up
         </button>
       </div>

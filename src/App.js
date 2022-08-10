@@ -7,13 +7,30 @@ import ParticleBG from './components/ParticleBg/ParticleBg'
 import Ranking from './components/Ranking/Ranking'
 
 class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      imageInput: '',
+    }
+  }
+
+  onChangeInput = (event) => {
+    console.log(event.target.value)
+  }
+  onSubmitButton = (event) => {
+    console.log('click')
+  }
+
   render() {
     return (
       <div className="app">
         <ParticleBG />
         <Navigation />
         <Ranking />
-        <ImageInput />
+        <ImageInput
+          onChangeInput={this.onChangeInput}
+          onSubmitButton={this.onSubmitButton}
+        />
         <FaceOutput />
       </div>
     )
