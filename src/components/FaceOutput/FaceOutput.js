@@ -10,7 +10,8 @@ const FaceOutput = ({ imgURL, box }) => {
             id="inputimage"
             src={imgURL}
             alt=""
-            width={400}
+            width={300}
+            height={300}
             className="face-img"
           />
           <div
