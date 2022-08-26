@@ -1,32 +1,81 @@
 import React from 'react'
 import './signIn.css'
-const SignIn = ({ onRouteChange }) => {
-  return (
-    <div className="form-container">
-      <form action="" className="form">
-        <h1 className="form-heading"> Sign In </h1>
-        <div className="input-container">
-          <label htmlFor="email">Email</label> <br />
-          <input type="email" placeholder="Email" name="email" />
-        </div>
-        <div className="input-container">
-          <label htmlFor="password">Password</label> <br />
-          <input type="password" placeholder="Password" name="password" />
-        </div>
-        <button
-          className="primary"
-          type="submit"
-          onClick={() => onRouteChange('home')}
-        >
-          Sign In
-        </button>
-        <button className="secondary" onClick={() => onRouteChange('register')}>
-          {' '}
-          Register{' '}
-        </button>
-      </form>
-    </div>
-  )
+
+class SignIn extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      signInEmail: '',
+      signInPassword: '',
+    }
+  }
+  onEmailChange = (event) => {
+    this.setState({ signInEmail: event.target.value })
+  }
+  onPasswordChange = (event) => {
+    this.setState({ signInPassword: event.target.value })
+  }
+  onSubmitSignIn = (event) => {
+    event.preventDefault()
+    fetch('http://localhost:8000/signin', {
+      method: 'post',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        email: this.state.signInEmail,
+        password: this.state.signInPassword,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data === 'Success') {
+          this.props.onRouteChange('home')
+        }
+      })
+    console.log(this.state)
+  }
+
+  render() {
+    const { onRouteChange } = this.props
+    return (
+      <div className="form-container">
+        <form action="" className="form">
+          <h1 className="form-heading"> Sign In </h1>
+          <div className="input-container">
+            <label htmlFor="email">Email</label> <br />
+            <input
+              type="email"
+              placeholder="Email"
+              name="email"
+              onChange={this.onEmailChange}
+            />
+          </div>
+          <div className="input-container">
+            <label htmlFor="password">Password</label> <br />
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              onChange={this.onPasswordChange}
+            />
+          </div>
+          <button
+            className="primary"
+            type="submit"
+            onClick={this.onSubmitSignIn}
+          >
+            Sign In
+          </button>
+          <button
+            className="secondary"
+            onClick={() => onRouteChange('register')}
+          >
+            {' '}
+            Register{' '}
+          </button>
+        </form>
+      </div>
+    )
+  }
 }
 
 export default SignIn
