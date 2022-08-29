@@ -26,12 +26,14 @@ class SignIn extends React.Component {
       }),
     })
       .then((res) => res.json())
-      .then((data) => {
-        if (data === 'Success') {
+      .then((user) => {
+        if (user.id) {
+          this.props.loadUser(user)
+
           this.props.onRouteChange('home')
         }
       })
-    console.log(this.state)
+    // console.log(this.state)
   }
 
   render() {
@@ -47,6 +49,7 @@ class SignIn extends React.Component {
               placeholder="Email"
               name="email"
               onChange={this.onEmailChange}
+              required
             />
           </div>
           <div className="input-container">
@@ -56,6 +59,7 @@ class SignIn extends React.Component {
               placeholder="Password"
               name="password"
               onChange={this.onPasswordChange}
+              required
             />
           </div>
           <button

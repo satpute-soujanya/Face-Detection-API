@@ -22,6 +22,13 @@ class App extends Component {
       imgURL: '',
       box: {},
       route: 'signin',
+      User: {
+        id: '',
+        name: '',
+        email: '',
+        entries: '',
+        joined: '',
+      },
     }
   }
   // componentDidMount() {
@@ -44,7 +51,6 @@ class App extends Component {
   }
 
   displayFaceBox = (box) => {
-    console.log(box)
     this.setState({ box: box })
   }
 
@@ -53,16 +59,48 @@ class App extends Component {
   }
   onSubmitButton = (event) => {
     this.setState({ imgURL: this.state.imageInput })
-    console.log('click')
+    // console.log('click')
     app.models
       .predict(Clarifai.FACE_DETECT_MODEL, this.state.imageInput)
-      .then((res) => {
-        this.displayFaceBox(this.calculateFaceLocation(res))
+      .then((response) => {
+        // console.log('hi', res)
+
+        if (response) {
+          fetch('http://localhost:8000/image', {
+            method: 'put',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              id: this.state.User.id,
+            }),
+          })
+            .then((response) => response.json())
+            .then((count) => {
+              console.log(count, 'count from')
+              this.setState(
+                Object.assign(this.state.User, { entries: count.entries })
+              )
+              console.log(this.state)
+            })
+            .catch(console.log)
+        }
+        this.displayFaceBox(this.calculateFaceLocation(response))
       })
       .catch((err) => console.log(err))
   }
   onRouteChange = (route) => {
     this.setState({ route: route })
+  }
+  loadUser = (Data) => {
+    // console.log('loaduser', Data)
+    this.setState({
+      User: {
+        id: Data.id,
+        name: Data.name,
+        email: Data.email,
+        entries: Data.entries,
+        joined: Data.joined,
+      },
+    })
   }
   render() {
     return (
@@ -74,7 +112,10 @@ class App extends Component {
         />
         {this.state.route === 'home' ? (
           <>
-            <Ranking />
+            <Ranking
+              name={this.state.User.name}
+              entries={this.state.User.entries}
+            />
             <ImageInput
               onChangeInput={this.onChangeInput}
               onSubmitButton={this.onSubmitButton}
@@ -82,9 +123,12 @@ class App extends Component {
             <FaceOutput imgURL={this.state.imgURL} box={this.state.box} />
           </>
         ) : this.state.route === 'signin' ? (
-          <SignIn onRouteChange={this.onRouteChange} />
+          <SignIn onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
         ) : this.state.route === 'register' ? (
-          <Register onRouteChange={this.onRouteChange} />
+          <Register
+            onRouteChange={this.onRouteChange}
+            loadUser={this.loadUser}
+          />
         ) : (
           <></>
         )}

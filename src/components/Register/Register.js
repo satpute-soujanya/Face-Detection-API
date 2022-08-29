@@ -31,11 +31,12 @@ class Register extends React.Component {
       }),
     })
       .then((res) => res.json())
-      .then((data) => {
-        // if (data === 'Success') {
-        //   this.props.onRouteChange('signin')
-        // }
-        console.log(data)
+      .then((user) => {
+        if (user.id) {
+          this.props.loadUser(user)
+          this.props.onRouteChange('home')
+        }
+        console.log(user)
       })
   }
   render() {
@@ -50,6 +51,7 @@ class Register extends React.Component {
               placeholder="Name"
               name="name"
               onChange={this.onNameChange}
+              required
             />
           </div>
           <div className="input-container">
@@ -59,6 +61,7 @@ class Register extends React.Component {
               placeholder="Email"
               name="email"
               onChange={this.onEmailChange}
+              required
             />
           </div>
           <div className="input-container">
@@ -68,9 +71,10 @@ class Register extends React.Component {
               placeholder="Password"
               name="password"
               onChange={this.onPasswordChange}
+              required
             />
           </div>
-          <button className="primary" onClick={this.onSubmit}>
+          <button type="submit" className="primary" onClick={this.onSubmit}>
             Register{' '}
           </button>
         </form>
